@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'title'  => trim($_POST['title']),
         'date'   => $_POST['date'],
         'time'   => $_POST['time'],
-        'type'   => $_POST['type'] === 'note' ? 'note' : 'reservation',
+        'type'   => clean_type($_POST['type'] ?? ''),
         'memo'   => trim($_POST['memo']),
         'remind' => (int)$_POST['remind'],
     ];
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         if (!$found) $events[] = $new;
         save_events($events);
-        header('Location: list.php');
+        header('Location: index.php');
         exit;
     }
 }
@@ -51,9 +51,10 @@ $v = $edit ?? ['id'=>'','title'=>'','date'=>$_GET['date'] ?? date('Y-m-d'),'time
     <div class="row">
       <div>
         <label>種類</label>
-        <select name="type">
-          <option value="reservation" <?= $v['type']=='reservation'?'selected':'' ?>>予約</option>
-          <option value="note" <?= $v['type']=='note'?'selected':'' ?>>メモ</option>
+        <select name="type" id="typeSel">
+          <?php foreach (event_types() as $key => $label): ?>
+            <option value="<?= h($key) ?>" style="background:<?= type_color($key) ?>;color:#fff" <?= $v['type']==$key?'selected':'' ?>><?= h($label) ?></option>
+          <?php endforeach; ?>
         </select>
       </div>
       <div>
@@ -73,4 +74,15 @@ $v = $edit ?? ['id'=>'','title'=>'','date'=>$_GET['date'] ?? date('Y-m-d'),'time
     <a href="index.php" class="btn">キャンセル</a>
   </form>
 </div>
+<script>
+// Color the 種類 dropdown to match the selected type
+const TYPE_COLORS = <?= json_encode(event_colors()) ?>;
+const typeSel = document.getElementById('typeSel');
+function paintTypeSel() {
+  const c = TYPE_COLORS[typeSel.value] || '#fff';
+  typeSel.style.background = c; typeSel.style.color = '#fff'; typeSel.style.borderColor = c;
+}
+typeSel.addEventListener('change', paintTypeSel);
+paintTypeSel();
+</script>
 <?php include 'includes/footer.php'; ?>

@@ -58,3 +58,33 @@ form .btn { margin-top: 20px; width: auto; }
   .row { flex-direction: column; gap: 0; }
   .list { font-size: 13px; }
 }
+
+/* Home page */
+main > .card { margin-bottom: 20px; }
+.count { font-size: 14px; color: #888; font-weight: normal; margin-left: 6px; }
+.important-box { border-left: 6px solid #d92d2d; }
+.ev { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-top: 1px solid #e3e7ee; }
+.ev:first-of-type { border-top: none; }
+.ev-time { min-width: 90px; font-size: 14px; color: #555; }
+.ev-main { flex: 1; min-width: 0; }
+.ev-main .tag { display: inline-block; margin: 0 6px 0 0; }
+.ev-memo { font-size: 13px; color: #777; margin-top: 4px; }
+.ev-actions { white-space: nowrap; }
+.ev-actions .btn { margin-top: 0; }
+.ev.past { opacity: .55; }
+.date-head { margin: 18px 0 4px; font-size: 15px; color: #3b6fd4; }
+.today-badge { background: #fff8d6; color: #a07800; font-size: 12px; padding: 2px 8px; border-radius: 10px; margin-left: 6px; }
+
+/* Today card */
+.today-card { max-width: 420px; border: 1px solid #d5ddee; }
+.today-date { font-size: 14px; color: #555; }
+.today-title { font-size: 20px; color: #3b6fd4; margin: 8px 0 12px; }
+.today-row { padding: 10px 0; border-top: 1px solid #e3e7ee; font-size: 15px; }
+.today-row .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; }
+.today-next { margin-top: 14px; font-size: 14px; color: #3b6fd4; }
+
+@media (max-width: 600px) {
+  .ev { flex-wrap: wrap; }
+  .ev-time { min-width: 100%; }
+  .today-card { max-width: 100%; }
+}
